@@ -1,7 +1,7 @@
 class CreateResources < ActiveRecord::Migration[5.2]
   def change
     create_table :resources do |t|
-      t.primary_key :uid
+      t.integer :uid
       t.string :name
       t.string :skills, array: true, default: []
       t.string :portfolio
