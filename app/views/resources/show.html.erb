@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Uid:</strong>
+  <%= @resource.uid %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @resource.name %>
+</p>
+
+<p>
+  <strong>Skills:</strong>
+  <%= @resource.skills %>
+</p>
+
+<p>
+  <strong>Portfolio:</strong>
+  <%= @resource.portfolio %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @resource.start_date %>
+</p>
+
+<p>
+  <strong>Location:</strong>
+  <%= @resource.location %>
+</p>
+
+<p>
+  <strong>Manager:</strong>
+  <%= @resource.manager %>
+</p>
+
+<%= link_to 'Edit', edit_resource_path(@resource) %> |
+<%= link_to 'Back', resources_path %>

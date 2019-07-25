@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uid: 
+  name: MyString
+  skills: MyString
+  portfolio: MyString
+  start_date: 2019-07-25
+  location: MyString
+  manager: MyString
+
+two:
+  uid: 
+  name: MyString
+  skills: MyString
+  portfolio: MyString
+  start_date: 2019-07-25
+  location: MyString
+  manager: MyString
