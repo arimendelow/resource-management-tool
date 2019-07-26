@@ -1,5 +1,5 @@
 <h1>Editing Resource</h1>
-
+<% @resource[:skills] = @resource[:skills].join(', ') %>
 <%= render 'form', resource: @resource %>
 
 <%= link_to 'Show', @resource %> |
