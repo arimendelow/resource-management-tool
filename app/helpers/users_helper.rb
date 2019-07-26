@@ -9,4 +9,15 @@ module UsersHelper
     # Image tag for the Gravatar with a 'gravatar' CSS class and alt text equal to the user's name
     image_tag(gravatar_url, alt: user.name, class:"gravatar")
   end
+
+  private
+
+    # Confirms a logged in user
+    def logged_in_user
+      unless logged_in?
+        store_location # This is defined in the sessions_helper
+        flash[:danger] = "Please log in."
+        redirect_to login_url
+      end
+    end
 end

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   # Restrict the filters to act only on the :edit and :update actions
+  # This one is in the users_helper
   before_action :logged_in_user,  only: [:edit, :update, :index, :destroy, :following, :followers]
   before_action :correct_user,    only: [:edit, :update]
   before_action :admin_user,      only: :destroy
@@ -85,15 +86,6 @@ class UsersController < ApplicationController
 
     # Before filters - for using with the 'before_action' command 
     # to arrange for a particular method to be called before the given actions
-
-    # Confirms a logged in user
-    def logged_in_user
-      unless logged_in?
-        store_location # This is defined in the sessions_helper
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end
 
     # For making sure that a user is only trying to edit himself
     def correct_user
