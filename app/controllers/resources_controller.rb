@@ -24,7 +24,6 @@ class ResourcesController < ApplicationController
   # POST /resources
   # POST /resources.json
   def create
-    debugger
     # Get the skills an array, stripping leading/trailing whitespace
     skills_arr = resource_params[:skills].split(/\s*,\s*/)
     @resource = Resource.new(resource_params)
@@ -46,7 +45,9 @@ class ResourcesController < ApplicationController
   # PATCH/PUT /resources/1.json
   def update
     respond_to do |format|
-      if @resource.update(resource_params)
+      # Put 'skills' in as an array
+      skills_arr = resource_params[:skills].split(/\s*,\s*/)
+      if @resource.update(resource_params) && @resource.update_attribute(:skills, skills_arr)
         format.html { redirect_to @resource, notice: 'Resource was successfully updated.' }
         format.json { render :show, status: :ok, location: @resource }
       else
