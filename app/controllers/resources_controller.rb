@@ -24,7 +24,12 @@ class ResourcesController < ApplicationController
   # POST /resources
   # POST /resources.json
   def create
+    debugger
+    # Get the skills an array, stripping leading/trailing whitespace
+    skills_arr = resource_params[:skills].split(/\s*,\s*/)
     @resource = Resource.new(resource_params)
+    # Put 'skills' in as an array
+    @resource.update_attribute(:skills, skills_arr)
 
     respond_to do |format|
       if @resource.save
