@@ -5,7 +5,19 @@ class ResourcesController < ApplicationController
   # GET /resources
   # GET /resources.json
   def index
-    @resources = Resource.all
+    # @resources = Resource.all
+    # .values turns the result from a hash map into an array
+    # .flatten ensures that the array is only one dimensional
+    @skills = ActiveRecord::Base.connection.execute(
+      "SELECT DISTINCT *
+      FROM
+      (
+        SELECT unnest(skills)
+        FROM public.resources
+      ) AS all_skills"
+    ).values.flatten
+    @selected_skills = []
+    @resources = Resource.where("skills @> :selected_skills", selected_skills: @selected_skills.to_s.sub('[','{').sub(']','}'))
   end
 
   # GET /resources/1
