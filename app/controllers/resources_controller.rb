@@ -5,6 +5,7 @@ class ResourcesController < ApplicationController
   # GET /resources
   # GET /resources.json
   def index
+    params[:selected_skills] = [] if !params[:selected_skills]
     # @resources = Resource.all
     # .values turns the result from a hash map into an array
     # .flatten ensures that the array is only one dimensional
@@ -16,8 +17,8 @@ class ResourcesController < ApplicationController
         FROM public.resources
       ) AS all_skills"
     ).values.flatten
-    @selected_skills = []
-    @resources = Resource.where("skills @> :selected_skills", selected_skills: @selected_skills.to_s.sub('[','{').sub(']','}'))
+    selected_skills = params[:selected_skills] || []
+    @resources = Resource.where("skills @> :selected_skills", selected_skills: selected_skills.to_s.sub('[','{').sub(']','}'))
   end
 
   # GET /resources/1

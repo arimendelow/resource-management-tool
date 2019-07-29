@@ -2,12 +2,19 @@
 
 <h1>Resources</h1>
 
-<h2>Skills List</h2>
-<ul>
-  <% @skills.each do |skill| %>
-    <li><%= skill %></li>
-  <% end %>
-</ul>
+<h2>Sort by Skills</h2>
+<%= form_tag resources_path, :method => "get" do %>
+  <ul>
+    <% @skills.each do |skill| %>
+      <% puts "Checkbox for skill #{skill}" %>
+      <% puts "params[:selected_skills].include? skill: #{params[:selected_skills].include? skill}" %>
+      <% checked = (params[:selected_skills].include? skill) ? true : false %>
+      <% puts "Checked: #{checked}" %>
+      <li><%= check_box_tag 'selected_skills[]', skill, checked %> <%= skill %></li>
+    <% end %>
+  </ul>
+  <%= submit_tag 'Submit' %>
+<% end %>
 
 <table>
   <thead>
