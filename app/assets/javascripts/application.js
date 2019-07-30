@@ -16,3 +16,8 @@
 //= require activestorage
 //= require turbolinks
 //= require_tree .
+
+
+(function () {
+  window.togglePassword();
+})();
