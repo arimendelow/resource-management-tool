@@ -9,10 +9,11 @@ class ResourcesController < ApplicationController
     # @resources = Resource.all
     # .values turns the result from a hash map into an array
     # .flatten ensures that the array is only one dimensional
+    # .sort to make it sorted alphabetically
     @skills = ActiveRecord::Base.connection.execute(
       "SELECT DISTINCT unnest(skills)
         FROM public.resources"
-    ).values.flatten
+    ).values.flatten.sort
     selected_skills = params[:selected_skills] || []
     @resources = Resource.where("skills @> :selected_skills", selected_skills: selected_skills.to_s.sub('[','{').sub(']','}'))
   end
@@ -34,8 +35,8 @@ class ResourcesController < ApplicationController
   # POST /resources
   # POST /resources.json
   def create
-    # Get the skills an array, stripping leading/trailing whitespace
-    skills_arr = resource_params[:skills].split(/\s*,\s*/)
+    # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
+    skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
     @resource = Resource.new(resource_params)
     # Put 'skills' in as an array
     @resource.update_attribute(:skills, skills_arr)
@@ -55,8 +56,8 @@ class ResourcesController < ApplicationController
   # PATCH/PUT /resources/1.json
   def update
     respond_to do |format|
-      # Put 'skills' in as an array
-      skills_arr = resource_params[:skills].split(/\s*,\s*/)
+      # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
+      skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
       if @resource.update(resource_params) && @resource.update_attribute(:skills, skills_arr)
         format.html { redirect_to @resource, notice: 'Resource was successfully updated.' }
         format.json { render :show, status: :ok, location: @resource }
