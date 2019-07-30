@@ -1,58 +1,61 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Resources</h1>
+<aside class="col-md-2">
+  <h2>Sort by Skills</h2>
+  <div>
+    <%= form_tag resources_path, :method => "get" do %>
+      <div>
+        <% n = 0 %>
+        <% @skills.each do |skill| %>
+          <% checked = (params[:selected_skills].include? skill) ? true : false %>
+          <% id =  "skill-checkbox-#{n}"%>
+          <div class="checkbox">
+            <%= check_box_tag 'selected_skills[]', skill, checked, class: "checkbox", id: id %>
+            <label class="nopadding checkbox" for=<%= id %>><%= skill %></label>
+          </div>
+          <% n += 1 %>
+        <% end %>
+      </div>
+      <%= submit_tag 'Sort Resources', class: "btn btn-primary btn-block" %>
+    <% end %>
+  </div>
+</aside>
+<div class="col-md-10 border-left">
+  <h1>Sorted Resources</h1>
+  <h2><%= link_to 'Add a Resource', new_resource_path, class: "btn btn-primary white-color" %></h2>
+  <% if @resources.empty? %>
+    <h3 class="text-center">No resources found for the given search scope!</h3>
+  <% else %>
+    <table>
+      <thead>
+        <tr>
+          <th class="text-center">Uid</th>
+          <th class="text-center">Name</th>
+          <th class="text-center">Skills</th>
+          <th class="text-center">Portfolio</th>
+          <th class="text-center">Start date</th>
+          <th class="text-center">Location</th>
+          <th class="text-center">Manager</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-<h2>Sort by Skills</h2>
-<div>
-  <%= form_tag resources_path, :method => "get" do %>
-    <div>
-      <% n = 0 %>
-      <% @skills.each do |skill| %>
-        <% checked = (params[:selected_skills].include? skill) ? true : false %>
-        <% id =  "skill-checkbox-#{n}"%>
-        <div class="checkbox">
-          <%= check_box_tag 'selected_skills[]', skill, checked, class: "checkbox", id: id %>
-          <label class="nopadding checkbox" for=<%= id %>><%= skill %></label>
-        </div>
-        <% n += 1 %>
-      <% end %>
-    </div>
-    <%= submit_tag 'Sort Resources', class: "btn btn-primary btn-block" %>
+      <tbody>
+        <% @resources.order(uid: :asc).each do |resource| %>
+          <tr class="border-top">
+            <td class="border-right"><b><%= resource.uid %></b></td>
+            <td class="border-right"><%= resource.name %></td>
+            <td class="border-right"><%= resource.skills.join(', ') %></td>
+            <td class="border-right"><%= resource.portfolio %></td>
+            <td class="border-right"><%= resource.start_date %></td>
+            <td class="border-right"><%= resource.location %></td>
+            <td class="border-right"><%= resource.manager %></td>
+            <td><b><%= link_to 'Show', resource %></b></td>
+            <td><b><%= link_to 'Edit', edit_resource_path(resource) %></b></td>
+            <td class="border-right"><b><%= link_to 'Destroy', resource, method: :delete, data: { confirm: 'Are you sure?' } %></b></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   <% end %>
 </div>
-
-<table>
-  <thead>
-    <tr>
-      <th>Uid</th>
-      <th>Name</th>
-      <th>Skills</th>
-      <th>Portfolio</th>
-      <th>Start date</th>
-      <th>Location</th>
-      <th>Manager</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @resources.each do |resource| %>
-      <tr>
-        <td><%= resource.uid %></td>
-        <td><%= resource.name %></td>
-        <td><%= resource.skills.join(', ') %></td>
-        <td><%= resource.portfolio %></td>
-        <td><%= resource.start_date %></td>
-        <td><%= resource.location %></td>
-        <td><%= resource.manager %></td>
-        <td><%= link_to 'Show', resource %></td>
-        <td><%= link_to 'Edit', edit_resource_path(resource) %></td>
-        <td><%= link_to 'Destroy', resource, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Resource', new_resource_path %>
