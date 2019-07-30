@@ -1,3 +1,47 @@
+<script>
+function exportDataToExcel(table_id, filename = 'export')
+{
+  var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+  var textRange; var j=0;
+  table = document.getElementById(table_id); // id of table
+
+  for(i = 0; i < table.rows.length; i++) 
+  {
+    tab_text += table.rows[i].innerHTML+"</tr>";
+    // tab_text=tab_text+"</tr>";
+  }
+
+  tab_text=tab_text+"</table>";
+  tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, ""); //remove if u want links in your table
+  tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+  tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+  var ua = window.navigator.userAgent;
+  var msie = ua.indexOf("MSIE "); 
+
+  if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer
+  {
+    txtArea1.document.open("txt/html","replace");
+    txtArea1.document.write(tab_text);
+    txtArea1.document.close();
+    txtArea1.focus(); 
+    sa=txtArea1.document.execCommand("SaveAs",true, filename + ".xls");
+    return (sa);
+  }
+  else //other browser not tested on IE 11
+  {
+    fileType = 'application/vnd.ms-excel';
+    filename = filename?filename+'.xls':'resources_download.xls';
+    downloadurl = document.createElement("a");
+    document.body.appendChild(downloadurl);
+    downloadurl.href = 'data:' + fileType + ', ' + encodeURIComponent(tab_text);
+    downloadurl.download = filename;
+    downloadurl.click();
+    // sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+  }
+}
+</script>
+
 <p id="notice"><%= notice %></p>
 
 <aside class="col-md-2">
@@ -20,13 +64,20 @@
     <% end %>
   </div>
 </aside>
+
 <div class="col-md-10 border-left">
   <h1>Sorted Resources</h1>
-  <h2><%= link_to 'Add a Resource', new_resource_path, class: "btn btn-primary white-color" %></h2>
+  <h2 class="row">
+    <%= link_to 'Add a Resource', new_resource_path, class: "btn btn-primary white-color" %>
+    <button class="btn btn-primary white-color nomargin" onclick="exportDataToExcel('resources-table', 'Exported_Resources')">
+      Export to excel
+    </button>
+  </h2>
+  
   <% if @resources.empty? %>
     <h3 class="text-center">No resources found for the given search scope!</h3>
   <% else %>
-    <table>
+    <table id="resources-table">
       <thead>
         <tr>
           <th class="text-center">Uid</th>
