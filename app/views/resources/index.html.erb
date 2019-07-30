@@ -3,15 +3,23 @@
 <h1>Resources</h1>
 
 <h2>Sort by Skills</h2>
-<%= form_tag resources_path, :method => "get" do %>
-  <ul>
-    <% @skills.each do |skill| %>
-      <% checked = (params[:selected_skills].include? skill) ? true : false %>
-      <li><%= check_box_tag 'selected_skills[]', skill, checked %> <%= skill %></li>
-    <% end %>
-  </ul>
-  <%= submit_tag 'Submit' %>
-<% end %>
+<div>
+  <%= form_tag resources_path, :method => "get" do %>
+    <div>
+      <% n = 0 %>
+      <% @skills.each do |skill| %>
+        <% checked = (params[:selected_skills].include? skill) ? true : false %>
+        <% id =  "skill-checkbox-#{n}"%>
+        <div class="checkbox">
+          <%= check_box_tag 'selected_skills[]', skill, checked, class: "checkbox", id: id %>
+          <label class="nopadding checkbox" for=<%= id %>><%= skill %></label>
+        </div>
+        <% n += 1 %>
+      <% end %>
+    </div>
+    <%= submit_tag 'Sort Resources', class: "btn btn-primary btn-block" %>
+  <% end %>
+</div>
 
 <table>
   <thead>
