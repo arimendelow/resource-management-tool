@@ -46,3 +46,25 @@ following = users[2..50]
 followers = users[3..40]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
+
+all_skills = ["Java", "Ruby On Rails", "Python", "React", "Javascript", "Ruby", "Selenium", "Excel", "Linux", "C", "C++", "JUnit", "Project Planning", "Product Mangement", "Entrepreneurship", "Data Analysis", "Public Speaking", "Teamwork", "Management", "Pitch Development"]
+all_portfolios = ["Finance", "Engineering", "Human Resources", "Marketing", "Accounting"]
+99.times do |n|
+  uid = rand(111111..999999)
+  name = Faker::Name.name
+  skills = all_skills.sample(rand(1..(all_skills.length)/2)) # Get a sample of skills from the above array
+  portfolio = all_portfolios.sample # Get one portfolio
+  start_date = Date.today - Faker::Number.number(3).to_i.days
+  location = Faker::Address.city
+  manager = Faker::Name.name
+  
+  Resource.create!(
+    uid: uid,
+    name: name,
+    skills: skills,
+    portfolio: portfolio,
+    start_date: start_date,
+    location: location,
+    manager: manager
+  )
+end
