@@ -6,10 +6,7 @@
 <%= form_tag resources_path, :method => "get" do %>
   <ul>
     <% @skills.each do |skill| %>
-      <% puts "Checkbox for skill #{skill}" %>
-      <% puts "params[:selected_skills].include? skill: #{params[:selected_skills].include? skill}" %>
       <% checked = (params[:selected_skills].include? skill) ? true : false %>
-      <% puts "Checked: #{checked}" %>
       <li><%= check_box_tag 'selected_skills[]', skill, checked %> <%= skill %></li>
     <% end %>
   </ul>
