@@ -5,10 +5,26 @@ function exportDataToExcel(table_id, filename = 'export')
   var textRange; var j=0;
   table = document.getElementById(table_id); // id of table
 
+  // Get the number of columns - only want to get cells with headers
+  num_cols = 0;
+  for(j = 0; j < table.rows[0].cells.length; j++)
+  {
+    if(table.rows[0].cells[6].innerText == "")
+      break;
+    else
+      num_cols++;
+  }
+  // Go through each row
   for(i = 0; i < table.rows.length; i++) 
   {
-    tab_text += table.rows[i].innerHTML+"</tr>";
-    // tab_text=tab_text+"</tr>";
+    for(j = 0; j < num_cols - 1; j++)
+    {
+      if(i == 0)
+        tab_text += "<th>" + table.rows[i].cells[j].innerHTML + "</th>"
+      else
+        tab_text += "<td>" + table.rows[i].cells[j].innerHTML + "</td>"
+    }
+    tab_text=tab_text+"</tr>";
   }
 
   tab_text=tab_text+"</table>";
