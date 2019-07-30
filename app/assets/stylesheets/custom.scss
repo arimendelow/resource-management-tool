@@ -5,6 +5,7 @@
 $gray-hover-color:  #d5dde1;
 $gray-medium-light: #eaeaea;
 $gray-medium:       #919191;
+$border-gray:       #e8e8e8;
 
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
@@ -13,12 +14,32 @@ $gray-medium:       #919191;
 
 }
 
+.white-color {
+  color: #ffffff !important;
+}
+
 .nopadding-right {
   padding-right: 0 !important;
 }
 
 .nopadding {
   padding: 0 !important;
+}
+
+.border-left {
+  border-left: 1px solid $border-gray;
+}
+
+.border-right {
+  border-right: 1px solid $border-gray;
+}
+
+.border-top {
+  border-top: 1px solid $border-gray;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $border-gray;
 }
 
 /* Universal styling */
