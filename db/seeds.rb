@@ -52,7 +52,7 @@ all_portfolios = ["Finance", "Engineering", "Human Resources", "Marketing", "Acc
 99.times do |n|
   uid = rand(111111..999999)
   name = Faker::Name.name
-  skills = all_skills.sample(rand(1..(all_skills.length)/2)) # Get a sample of skills from the above array
+  skills = all_skills.sample(rand(1..(all_skills.length)/2)).sort # Get a sample of skills from the above array
   portfolio = all_portfolios.sample # Get one portfolio
   start_date = Date.today - Faker::Number.number(3).to_i.days
   location = Faker::Address.city
