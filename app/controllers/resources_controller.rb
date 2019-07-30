@@ -10,12 +10,8 @@ class ResourcesController < ApplicationController
     # .values turns the result from a hash map into an array
     # .flatten ensures that the array is only one dimensional
     @skills = ActiveRecord::Base.connection.execute(
-      "SELECT DISTINCT *
-      FROM
-      (
-        SELECT unnest(skills)
-        FROM public.resources
-      ) AS all_skills"
+      "SELECT DISTINCT unnest(skills)
+        FROM public.resources"
     ).values.flatten
     selected_skills = params[:selected_skills] || []
     @resources = Resource.where("skills @> :selected_skills", selected_skills: selected_skills.to_s.sub('[','{').sub(']','}'))
