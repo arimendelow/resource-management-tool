@@ -25,7 +25,7 @@
   <h1>Sorted Resources</h1>
   <h2 class="row">
     <%= link_to 'Add a Resource', new_resource_path, class: "btn btn-primary white-color" %>
-    <%= link_to 'Export to Excel', resources_path(format: :xlsx), class: "btn btn-primary white-color" %>
+    <%= link_to 'Export to Excel', resources_path(format: :xlsx, selected_skills: params[:selected_skills]), class: "btn btn-primary white-color" %>
   </h2>
   
   <% if @resources.empty? %>
