@@ -27,6 +27,7 @@ wb.styles do |style|
     sheet.add_row attributes, style: heading, height: 30
     # Create entries for each item
     @resources.each do |resource|
+      # Get the attributes of the resource
       resource_attributes = resource.attributes
       # Make skills one string
       resource_attributes["skills"] = resource_attributes["skills"].join(', ')
