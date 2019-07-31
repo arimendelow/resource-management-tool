@@ -1,0 +1,45 @@
+# Create a variable that’s associated with a new workbook
+wb = xlsx_package.workbook
+
+# Add a new worksheet to our newly created workbook, and sends it a block of code for execution.
+
+# Create the header style
+wb.styles do |style|
+  heading = style.add_style(
+    b:          true,
+    alignment:  { horizontal: :center, vertical: :center },
+    border:     { style: :thin, color: "000000" },
+    bg_color:   "305496",
+    fg_color:   "ffffff",
+  )
+  borders = style.add_style(
+    border:     { style: :thin, color: "000000" },
+  )
+
+  # Name the worksheet 'Resources as of (time)'
+  wb.add_worksheet(name: "Resources") do |sheet|
+    # Get all of the attributes of a Resource:
+    attributes = Resource.attribute_names.to_a
+    # The first attribute is ID, the last two are the 'created_at' and 'updated_at' attributes
+    # Also, make all of the attributes in Title Case
+    attributes = attributes[1..attributes.length - 3].map(&:titleize)
+    # Create the header row from the attributes
+    sheet.add_row attributes, style: heading, height: 30
+    # Create entries for each item
+    @resources.each do |resource|
+      resource_attributes = resource.attributes
+      # Make skills one string
+      resource_attributes["skills"] = resource_attributes["skills"].join(', ')
+      # Make start date a string
+      resource_attributes["start_date"] = resource_attributes["start_date"].to_s
+      # Turn the hashmap into an array of the values
+      resource_attributes = resource_attributes.values
+      # Now, chop off that first and last two attributes
+      resource_attributes = resource_attributes[1..resource_attributes.length - 3]
+      # And finally, add that list of attributes as a new row to the sheet
+      sheet.add_row resource_attributes, style: borders
+    end
+  end
+
+end
+

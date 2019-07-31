@@ -15,7 +15,16 @@ class ResourcesController < ApplicationController
         FROM public.resources"
     ).values.flatten.sort
     selected_skills = params[:selected_skills] || []
-    @resources = Resource.where("skills @> :selected_skills", selected_skills: selected_skills.to_s.sub('[','{').sub(']','}'))
+    @resources = Resource.where("skills @> :selected_skills", selected_skills: selected_skills.to_s.sub('[','{').sub(']','}')).order(uid: :asc)
+  
+    respond_to do |format|
+      format.xlsx {
+        response.headers[
+          'Content-Disposition'
+        ] = "attachment; filename=Exported Resources at #{Time.now.to_s}.xlsx"
+      }
+      format.html { render :index }
+    end
   end
 
   # GET /resources/1

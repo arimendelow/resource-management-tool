@@ -50,6 +50,11 @@ gem "aws-ses", "~> 0.6.0", :require => 'aws/ses'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+# For exporting data to excel
+gem 'rubyzip', '>= 1.2.1'
+gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
+gem 'axlsx_rails'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
