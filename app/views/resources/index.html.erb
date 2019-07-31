@@ -93,7 +93,8 @@ function exportDataToExcel(table_id, filename)
   <h1>Sorted Resources</h1>
   <h2 class="row">
     <%= link_to 'Add a Resource', new_resource_path, class: "btn btn-primary white-color" %>
-    <button class="btn btn-primary white-color nomargin" onclick="exportDataToExcel('resources-table', '<%= "Exported Resources at " + Time.now.to_s %>')">
+    <%= link_to 'Export to Excel', resource_path(format: :xlsx)
+%>
       Export to excel
     </button>
   </h2>
