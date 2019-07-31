@@ -35,27 +35,34 @@ function exportDataToExcel(table_id, filename)
   var ua = window.navigator.userAgent;
   var msie = ua.indexOf("MSIE "); 
 
-  if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer
-  {
-    txtArea1 = window.open();
-    txtArea1.document.open("txt/html","replace");
-    txtArea1.document.write(tab_text);
-    txtArea1.document.close();
-    txtArea1.focus(); 
-    sa=txtArea1.document.execCommand("SaveAs",true, filename + ".xls");
-    return (sa);
-  }
-  else //other browser not tested on IE 11
-  {
-    fileType = 'application/vnd.ms-excel';
-    filename = filename?filename+'.xls':'resources_download.xls';
-    downloadurl = document.createElement("a");
-    document.body.appendChild(downloadurl);
-    downloadurl.href = 'data:' + fileType + ', ' + encodeURIComponent(tab_text);
-    downloadurl.download = filename;
-    downloadurl.click();
-    // sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
-  }
+  fileType = 'application/vnd.ms-excel';
+  filename = filename?filename+'.xls':'resources_download.xls';
+  downloadurl = document.createElement("a");
+  document.body.appendChild(downloadurl);
+  downloadurl.href = 'data:' + fileType + ', ' + encodeURIComponent(tab_text);
+  downloadurl.download = filename;
+  downloadurl.click();
+
+  // if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer
+  // {
+  //   txtArea1 = window.open();
+  //   txtArea1.document.open("txt/html","replace");
+  //   txtArea1.document.write(tab_text);
+  //   txtArea1.document.close();
+  //   txtArea1.focus(); 
+  //   sa=txtArea1.document.execCommand("SaveAs",true, filename + ".xls");
+  //   return (sa);
+  // }
+  // else //other browser not tested on IE 11
+  // {
+  //   fileType = 'application/vnd.ms-excel';
+  //   filename = filename?filename+'.xls':'resources_download.xls';
+  //   downloadurl = document.createElement("a");
+  //   document.body.appendChild(downloadurl);
+  //   downloadurl.href = 'data:' + fileType + ', ' + encodeURIComponent(tab_text);
+  //   downloadurl.download = filename;
+  //   downloadurl.click();
+  // }
 }
 </script>
 
