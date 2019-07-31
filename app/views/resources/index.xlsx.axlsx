@@ -27,9 +27,11 @@ wb.styles do |style|
     sheet.add_row attributes, style: heading, height: 30
     # Create entries for each item
     @resources.each do |resource|
-      resource_attributes = Resource.first.attributes
+      resource_attributes = resource.attributes
       # Make skills one string
       resource_attributes["skills"] = resource_attributes["skills"].join(', ')
+      # Make start date a string
+      resource_attributes["start_date"] = resource_attributes["start_date"].to_s
       # Turn the hashmap into an array of the values
       resource_attributes = resource_attributes.values
       # Now, chop off that first and last two attributes
