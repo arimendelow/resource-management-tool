@@ -1,6 +1,9 @@
 # Create a variable that’s associated with a new workbook
 wb = xlsx_package.workbook
 
+# Create a micropost to report that this excel file is generated
+current_user.microposts.create!(content: "pulled a Resources excel report with #{@resources.length} resources")
+
 # Add a new worksheet to our newly created workbook, and sends it a block of code for execution.
 
 # Create the header style
@@ -43,4 +46,3 @@ wb.styles do |style|
   end
 
 end
-
