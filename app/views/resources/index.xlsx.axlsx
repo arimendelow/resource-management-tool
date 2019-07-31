@@ -3,7 +3,7 @@ wb = xlsx_package.workbook
 
 # Add a new worksheet to our newly created workbook, and sends it a block of code for execution.
 # Name the worksheet 'Resources as of (time)'
-wb.add_worksheet(name: "Resources as of #{Time.now.to_s}") do |sheet|
+wb.add_worksheet(name: "Resources") do |sheet|
   # Get all of the attributes of a Resource:
   attributes = Resource.attribute_names.to_a
   # The first attribute is ID, the last two are the 'created_at' and 'updated_at' attributes
