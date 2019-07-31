@@ -52,6 +52,8 @@ class ResourcesController < ApplicationController
 
     respond_to do |format|
       if @resource.save
+        # 'current_user' is from 'sessions_helper'
+        current_user.microposts.create!(content: "<p>created a resource <a href='/resources/#{@resource.id}'>#{@resource.name}</a> with UID #{@resource.uid}</p>")
         format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
         format.json { render :show, status: :created, location: @resource }
       else
@@ -68,6 +70,8 @@ class ResourcesController < ApplicationController
       # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
       skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
       if @resource.update(resource_params) && @resource.update_attribute(:skills, skills_arr)
+        # 'current_user' is from 'sessions_helper'
+        current_user.microposts.create!(content: "<p>edited the resource <a href='/resources/#{@resource.id}'>#{@resource.name}</a> with UID #{@resource.uid}</p>")
         format.html { redirect_to @resource, notice: 'Resource was successfully updated.' }
         format.json { render :show, status: :ok, location: @resource }
       else
@@ -80,8 +84,11 @@ class ResourcesController < ApplicationController
   # DELETE /resources/1
   # DELETE /resources/1.json
   def destroy
+    uid = @resource.uid
+    name = @resource.name
     @resource.destroy
     respond_to do |format|
+      current_user.microposts.create!(content: "<p>destroyed the resource #{name} with UID #{uid}</p>")
       format.html { redirect_to resources_url, notice: 'Resource was successfully destroyed.' }
       format.json { head :no_content }
     end
