@@ -52,6 +52,8 @@ class ResourcesController < ApplicationController
 
     respond_to do |format|
       if @resource.save
+        # 'current_user' is from 'sessions_helper'
+        current_user.microposts.create!(content: "created a new resource with UID #{@resource.uid} and name #{@resource.name}")
         format.html { redirect_to @resource, notice: 'Resource was successfully created.' }
         format.json { render :show, status: :created, location: @resource }
       else
@@ -68,6 +70,8 @@ class ResourcesController < ApplicationController
       # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
       skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
       if @resource.update(resource_params) && @resource.update_attribute(:skills, skills_arr)
+        # 'current_user' is from 'sessions_helper'
+        current_user.microposts.create!(content: "edited the resource with UID #{@resource.uid} and name #{@resource.name}")
         format.html { redirect_to @resource, notice: 'Resource was successfully updated.' }
         format.json { render :show, status: :ok, location: @resource }
       else
