@@ -1,7 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <aside class="col-md-2">
-  <h2>Sort by Skills</h2>
+  <h4><b>Sort by: Skills</b></h4>
+  <p>Note: If nothing is selected, all resources will be shown.</p>
   <div>
     <%= form_tag resources_path, :method => "get" do %>
       <div>
@@ -22,7 +23,7 @@
 </aside>
 
 <div class="col-md-10 border-left">
-  <h1>Sorted Resources</h1>
+  <h1>Sorted Resources: <%= @resources.length %> results</h1>
   <h2 class="row">
     <%= link_to 'Add a Resource', new_resource_path, class: "btn btn-primary white-color" %>
     <%= link_to 'Export to Excel', resources_path(format: :xlsx, selected_skills: params[:selected_skills]), class: "btn btn-primary white-color" %>
