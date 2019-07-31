@@ -15,7 +15,7 @@ class ResourcesController < ApplicationController
         FROM public.resources"
     ).values.flatten.sort
     selected_skills = params[:selected_skills] || []
-    @resources = Resource.where("skills @> :selected_skills", selected_skills: selected_skills.to_s.sub('[','{').sub(']','}'))
+    @resources = Resource.where("skills @> :selected_skills", selected_skills: selected_skills.to_s.sub('[','{').sub(']','}')).order(uid: :asc)
   
     respond_to do |format|
       format.xlsx {

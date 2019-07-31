@@ -114,7 +114,7 @@ function exportDataToExcel(table_id, filename)
       </thead>
 
       <tbody>
-        <% @resources.order(uid: :asc).each do |resource| %>
+        <% @resources.each do |resource| %>
           <tr class="border-top">
             <td class="border-right"><b><%= resource.uid %></b></td>
             <td class="border-right"><%= resource.name %></td>
