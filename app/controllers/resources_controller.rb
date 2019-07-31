@@ -21,7 +21,7 @@ class ResourcesController < ApplicationController
       format.xlsx {
         response.headers[
           'Content-Disposition'
-        ] = "attachment; filename='Exported Resources at #{Time.now.to_s}.xlsx'"
+        ] = "attachment; filename=Exported Resources at #{Time.now.to_s}.xlsx"
       }
       format.html { render :index }
     end
