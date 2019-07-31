@@ -37,6 +37,7 @@ function exportDataToExcel(table_id, filename)
 
   if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer
   {
+    txtArea1 = window.open();
     txtArea1.document.open("txt/html","replace");
     txtArea1.document.write(tab_text);
     txtArea1.document.close();
