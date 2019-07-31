@@ -34,27 +34,40 @@
     <table id="resources-table">
       <thead>
         <tr>
-          <th class="text-center">Uid</th>
-          <th class="text-center">Name</th>
-          <th class="text-center">Skills</th>
-          <th class="text-center">Portfolio</th>
-          <th class="text-center">Start date</th>
-          <th class="text-center">Location</th>
-          <th class="text-center">Manager</th>
+          <% # Get all of the attributes of a Resource:
+          attributes = Resource.attribute_names.to_a
+          # The first attribute is ID, the last two are the 'created_at' and 'updated_at' attributes
+          # Also, make all of the attributes in Title Case
+          attributes = attributes[1..attributes.length - 3].map(&:titleize)
+          # Create the header row from the attributes %>
+          <% attributes.each do |attribute| %>
+            <th class="text-center"><%= attribute %></th>
+          <% end %>
+          <!-- Column for Show/Edit/Delete buttons -->
           <th colspan="3"></th>
         </tr>
       </thead>
 
       <tbody>
+        <!-- Now, put the resources rows -->
         <% @resources.each do |resource| %>
           <tr class="border-top">
-            <td class="border-right"><b><%= resource.uid %></b></td>
-            <td class="border-right"><%= resource.name %></td>
-            <td class="border-right"><%= resource.skills.join(', ') %></td>
-            <td class="border-right"><%= resource.portfolio %></td>
-            <td class="border-right"><%= resource.start_date %></td>
-            <td class="border-right"><%= resource.location %></td>
-            <td class="border-right"><%= resource.manager %></td>
+            <!-- Each column -->
+            <% # Get the attributes of the resource
+            resource_attributes = resource.attributes
+            # Make skills one string
+            resource_attributes["skills"] = resource_attributes["skills"].join(', ')
+            # Make start date a string
+            resource_attributes["start_date"] = resource_attributes["start_date"].to_s
+            # Turn the hashmap into an array of the values
+            resource_attributes = resource_attributes.values
+            # Now, chop off that first and last two attributes
+            resource_attributes = resource_attributes[1..resource_attributes.length - 3]
+            # And finally, add that list of attributes as a new row to the sheet %>
+            <% resource_attributes.each do |attribute| %>
+              <td class="border-right"><%= attribute %></td>
+            <% end %>
+            <!-- The Edit Show and Destroy links -->
             <td><b><%= link_to 'Show', resource %></b></td>
             <td><b><%= link_to 'Edit', edit_resource_path(resource) %></b></td>
             <td class="border-right"><b><%= link_to 'Destroy', resource, method: :delete, data: { confirm: 'Are you sure?' } %></b></td>
