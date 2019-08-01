@@ -28,7 +28,6 @@ class ResourcesController < ApplicationController
   end
 
   # GET /resources/1
-  # GET /resources/1.json
   def show
   end
 
@@ -43,7 +42,6 @@ class ResourcesController < ApplicationController
   end
 
   # POST /resources
-  # POST /resources.json
   def create
     # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
     skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
@@ -63,7 +61,6 @@ class ResourcesController < ApplicationController
   end
 
   # PATCH/PUT /resources/1
-  # PATCH/PUT /resources/1.json
   def update
     # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
     skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
@@ -78,7 +75,6 @@ class ResourcesController < ApplicationController
   end
 
   # DELETE /resources/1
-  # DELETE /resources/1.json
   def destroy
     uid = @resource.uid
     name = @resource.name
