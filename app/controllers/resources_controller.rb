@@ -47,9 +47,9 @@ class ResourcesController < ApplicationController
   def create
     # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
     skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
-    @resource = Resource.new(resource_params)
     # Put 'skills' in as an array
-    @resource.update_attribute(:skills, skills_arr)
+    resource_params[:skills] = skills_arr
+    @resource = Resource.new(resource_params)
 
     if @resource.save
       # 'current_user' is from 'sessions_helper'
