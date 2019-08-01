@@ -66,7 +66,8 @@ class ResourcesController < ApplicationController
   def update
     # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
     skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
-    if @resource.update_attributes(resource_params) && @resource.update_attribute(:skills, skills_arr)
+    resource_params[:skills] = skills_arr
+    if @resource.update_attributes(resource_params)
       # 'current_user' is from 'sessions_helper'
       current_user.microposts.create!(content: "<p>edited the resource <a href='/resources/#{@resource.id}'>#{@resource.name}</a> with UID #{@resource.uid}</p>")
       flash[:success] = "Resource #{@resource.name} successfully edited."
