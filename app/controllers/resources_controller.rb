@@ -16,7 +16,7 @@ class ResourcesController < ApplicationController
     ).values.flatten.sort
     selected_skills = params[:selected_skills] || []
     @resources = Resource.where("skills @> :selected_skills", selected_skills: selected_skills.to_s.sub('[','{').sub(']','}')).order(uid: :asc)
-  
+
     respond_to do |format|
       format.xlsx {
         response.headers[
@@ -39,6 +39,7 @@ class ResourcesController < ApplicationController
 
   # GET /resources/1/edit
   def edit
+    @resource = Resource.find(params[:id])
   end
 
   # POST /resources
@@ -50,36 +51,29 @@ class ResourcesController < ApplicationController
     # Put 'skills' in as an array
     @resource.update_attribute(:skills, skills_arr)
 
-    respond_to do |format|
-      if @resource.save
-        # 'current_user' is from 'sessions_helper'
-        current_user.microposts.create!(content: "<p>created a resource <a href='/resources/#{@resource.id}'>#{@resource.name}</a> with UID #{@resource.uid}</p>")
-        flash[:success] = "Resource #{@resource.name} successfully created."
-        format.html { redirect_to @resource }
-        format.json { render :show, status: :created, location: @resource }
-      else
-        format.html { render :new }
-        format.json { render json: @resource.errors, status: :unprocessable_entity }
-      end
+    if @resource.save
+      # 'current_user' is from 'sessions_helper'
+      current_user.microposts.create!(content: "<p>created a resource <a href='/resources/#{@resource.id}'>#{@resource.name}</a> with UID #{@resource.uid}</p>")
+      flash[:success] = "Resource #{@resource.name} successfully created."
+      redirect_to @resource
+    else
+      @resource.destroy
+      render :new
     end
   end
 
   # PATCH/PUT /resources/1
   # PATCH/PUT /resources/1.json
   def update
-    respond_to do |format|
-      # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
-      skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
-      if @resource.update(resource_params) && @resource.update_attribute(:skills, skills_arr)
-        # 'current_user' is from 'sessions_helper'
-        current_user.microposts.create!(content: "<p>edited the resource <a href='/resources/#{@resource.id}'>#{@resource.name}</a> with UID #{@resource.uid}</p>")
-        flash[:success] = "Resource #{@resource.name} successfully edited."
-        format.html { redirect_to @resource }
-        format.json { render :show, status: :ok, location: @resource }
-      else
-        format.html { render :edit }
-        format.json { render json: @resource.errors, status: :unprocessable_entity }
-      end
+    # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
+    skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
+    if @resource.update_attributes(resource_params) && @resource.update_attribute(:skills, skills_arr)
+      # 'current_user' is from 'sessions_helper'
+      current_user.microposts.create!(content: "<p>edited the resource <a href='/resources/#{@resource.id}'>#{@resource.name}</a> with UID #{@resource.uid}</p>")
+      flash[:success] = "Resource #{@resource.name} successfully edited."
+      redirect_to @resource
+    else
+      render :edit
     end
   end
 
@@ -89,12 +83,10 @@ class ResourcesController < ApplicationController
     uid = @resource.uid
     name = @resource.name
     @resource.destroy
-    respond_to do |format|
-      current_user.microposts.create!(content: "<p>destroyed the resource #{name} with UID #{uid}</p>")
-      flash[:success] = "Resource #{name} successfully destroyed."
-      format.html { redirect_to resources_url }
-      format.json { head :no_content }
-    end
+
+    current_user.microposts.create!(content: "<p>destroyed the resource #{name} with UID #{uid}</p>")
+    flash[:success] = "Resource #{name} successfully destroyed."
+    redirect_to resources_url 
   end
 
   private
