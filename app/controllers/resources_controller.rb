@@ -43,7 +43,7 @@ class ResourcesController < ApplicationController
     @resource = Resource.find(params[:id])
   end
 
-  # POST /resources
+  # POST /resources/new
   def create
     # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
     skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
@@ -63,7 +63,7 @@ class ResourcesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /resources/1
+  # PATCH/PUT /resources/1/edit
   def update
     # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
     skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
