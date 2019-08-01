@@ -6,6 +6,7 @@ $gray-hover-color:  #d5dde1;
 $gray-medium-light: #eaeaea;
 $gray-medium:       #919191;
 $border-gray:       #e8e8e8;
+$blue-dark:         #003f91;
 
 @mixin box_sizing {
   -moz-box-sizing:    border-box;
@@ -59,16 +60,21 @@ $border-gray:       #e8e8e8;
 }
 
 /* Universal styling */
-
 /* Look here for the Boostrap variables: https://getbootstrap.com/docs/3.4/customize/ */
+
 html {
  height: 100%;
 }
 body {
   height: 100%;
-  padding-top: 20px;
+  padding: 50px;
+  // margin: 33px;
   display: flex!important;
   flex-direction: column!important;
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
 }
 
 section {
@@ -91,6 +97,10 @@ textarea {
 .microposts {
   list-style: none;
   padding: 0;
+  a {
+    color: $blue-dark !important;
+    font-weight: bold;
+  }
   li {
     padding: 10px 0;
     border-top: 1px solid #e8e8e8;
