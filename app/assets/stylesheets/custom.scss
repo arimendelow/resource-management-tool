@@ -25,7 +25,8 @@ $border-gray:       #e8e8e8;
   background-color: $gray-medium;
 }
 
-.white-color {
+// Make sure that all blue button text is white
+.btn-primary {
   color: #ffffff !important;
 }
 
