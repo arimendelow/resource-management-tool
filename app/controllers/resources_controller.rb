@@ -48,8 +48,9 @@ class ResourcesController < ApplicationController
     # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
     skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
     # Put 'skills' in as an array
-    resource_params[:skills] = skills_arr
-    @resource = Resource.new(resource_params)
+    params = resource_params # 'resource_params' is immutable, apparently
+    params[:skills] = skills_arr
+    @resource = Resource.new(params)
 
     if @resource.save
       # 'current_user' is from 'sessions_helper'
@@ -66,8 +67,10 @@ class ResourcesController < ApplicationController
   def update
     # Get the skills as an array, stripping leading/trailing whitespace, and make it all title case, and then sort it
     skills_arr = resource_params[:skills].split(/\s*,\s*/).map(&:downcase).map(&:titleize).sort
-    resource_params[:skills] = skills_arr
-    if @resource.update_attributes(resource_params)
+    # Put 'skills' in as an array
+    params = resource_params # 'resource_params' is immutable, apparently
+    params[:skills] = skills_arr
+    if @resource.update_attributes(params)
       # 'current_user' is from 'sessions_helper'
       current_user.microposts.create!(content: "<p>edited the resource <a href='/resources/#{@resource.id}'>#{@resource.name}</a> with UID #{@resource.uid}</p>")
       flash[:success] = "Resource #{@resource.name} successfully edited."
