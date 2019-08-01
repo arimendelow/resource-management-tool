@@ -15,6 +15,8 @@ class ResourcesController < ApplicationController
         FROM public.resources"
     ).values.flatten.sort
     selected_skills = params[:selected_skills] || []
+    # Get filter the resources, and need to change the [] from the Ruby array to the {} of the SQL array. Also, sort it by UID.
+    # Also, note that passing an empty array will return everything, rather than nothing
     @resources = Resource.where("skills @> :selected_skills", selected_skills: selected_skills.to_s.sub('[','{').sub(']','}')).order(uid: :asc)
 
     respond_to do |format|
