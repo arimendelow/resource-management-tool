@@ -54,7 +54,7 @@ class ResourcesController < ApplicationController
       if @resource.save
         # 'current_user' is from 'sessions_helper'
         current_user.microposts.create!(content: "<p>created a resource <a href='/resources/#{@resource.id}'>#{@resource.name}</a> with UID #{@resource.uid}</p>")
-        flash[:success] = "Resource #{@resouce.name} successfully created."
+        flash[:success] = "Resource #{@resource.name} successfully created."
         format.html { redirect_to @resource }
         format.json { render :show, status: :created, location: @resource }
       else
@@ -73,7 +73,7 @@ class ResourcesController < ApplicationController
       if @resource.update(resource_params) && @resource.update_attribute(:skills, skills_arr)
         # 'current_user' is from 'sessions_helper'
         current_user.microposts.create!(content: "<p>edited the resource <a href='/resources/#{@resource.id}'>#{@resource.name}</a> with UID #{@resource.uid}</p>")
-        flash[:success] = "Resource #{@resouce.name} successfully created."
+        flash[:success] = "Resource #{@resource.name} successfully edited."
         format.html { redirect_to @resource }
         format.json { render :show, status: :ok, location: @resource }
       else
