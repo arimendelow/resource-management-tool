@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   get     '/login'                          ,to: 'sessions#new'
   post    '/login'                          ,to: 'sessions#create'
   delete  '/logout'                         ,to: 'sessions#destroy'
+  # get     '/resources'                      ,to: 'resources#index'
+  get     '/resources/new'                  ,to: 'resources#new'
+  post    '/resources/new'                  ,to: 'resources#create'
+  patch   '/resources/:id/edit'                 ,to: 'resources#update'
   # Need this for CRUD operations on a given user - see the CRUD table for the provided actions
   resources :users do
     # Makes it possible to have URLs such as /users/:id/following and /users/:id/followers

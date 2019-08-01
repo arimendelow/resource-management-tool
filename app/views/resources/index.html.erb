@@ -36,7 +36,7 @@
           <% # Get all of the attributes of a Resource:
           attributes = Resource.attribute_names.to_a
           # The first attribute is ID, the last two are the 'created_at' and 'updated_at' attributes
-          # Also, make all of the attributes in Title Case
+          # Also, make all of the attributes in Title Cases
           attributes = attributes[1..attributes.length - 3].map(&:titleize)
           # Create the header row from the attributes %>
           <% attributes.each do |attribute| %>

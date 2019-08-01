@@ -1,5 +1,6 @@
 <h1>Editing Resource</h1>
 <% @resource[:skills] = @resource[:skills].join(', ') %>
+<% provide(:submit_url, edit_resource_path(@resource)) %>
 <% provide(:button_text, "Edit #{@resource.name}") %>
 
 <div class="row">
