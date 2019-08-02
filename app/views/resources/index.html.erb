@@ -8,8 +8,17 @@
           <% checked = (params[:selected_attributes].include? attribute) ? true : false %>
           <% id = "attribute-checkbox-#{n}"%>
           <div class="checkbox">
-            <%= check_box_tag 'selected_attributes[]', attribute, checked, class: "checkbox", id: id %>
-            <label class="nopadding checkbox" for=<%= id %>><%= attribute %></label>
+            <!-- Hide the tag if it's for the id - that is for internal use -->
+            <% if attribute == "id" %>
+              <%= hidden_field_tag 'selected_attributes[]', attribute %>
+            <!-- If the attribute is in the 'default_attributes' list, make it unclickable -->
+            <% elsif @default_selected_attributes  %>
+              <%= check_box_tag 'selected_attributes[]', attribute, checked, class: "checkbox", id: id, disabled: true %>
+              <label class="nopadding checkbox" for=<%= id %>><%= attribute %></label>
+            <% else %>
+              <%= check_box_tag 'selected_attributes[]', attribute, checked, class: "checkbox", id: id %>
+              <label class="nopadding checkbox" for=<%= id %>><%= attribute %></label>
+            <% end %>
           </div>
           <% n += 1 %>
         <% end %>
