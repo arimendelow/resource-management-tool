@@ -107,6 +107,6 @@ class ResourcesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def resource_params
-      params.require(:resource).permit(:uid, :name, :skills, :portfolio, :start_date, :location, :manager)
+      params.require(:resource).permit(:uid, :name, :phone_number, :email, :skills, :portfolio, :start_date, :location, :manager)
     end
 end
