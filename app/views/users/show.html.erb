@@ -16,7 +16,7 @@
     <%= render 'follow_form' if logged_in? %>
     <!-- Make sure we don't just display an empty list -->
     <% if @user.microposts.any? %>
-      <h3><%= @user.name %> has <%= @user.microposts.count %> microposts</h3>
+      <h3><%= @user.name %> has <%= @user.microposts.count %> activities</h3>
       <ol class="microposts">
         <!-- Smart enough to automatically use the microposts template partial -->
         <%= render @microposts %>
