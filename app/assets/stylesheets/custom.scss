@@ -43,6 +43,12 @@ $blue-dark:         #003f91;
   margin: 0 !important;
 }
 
+.margin-20 {
+  margin: 20px;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
 .border-left {
   border-left: 1px solid $border-gray;
 }
@@ -87,9 +93,10 @@ textarea {
 
 .center {
   text-align: center;
-  h1 {
-    margin-bottom: 10px;
-  }
+}
+
+.right {
+  text-align: right;
 }
 
 /* Microposts */
@@ -311,7 +318,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 3em;
   letter-spacing: -2px;
-  margin-bottom: 30px;
+  // margin-bottom: 30px;
   text-align: center;
 }
 
