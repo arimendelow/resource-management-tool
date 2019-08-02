@@ -56,10 +56,10 @@
       <thead>
         <tr>
           <% # Get all of the attributes of a Resource:
-          attributes = Resource.attribute_names.to_a
-          # The first attribute is ID, the last two are the 'created_at' and 'updated_at' attributes
+          attributes = params[:selected_attributes]
+          # The first attribute is ID
           # Also, make all of the attributes in Title Cases
-          attributes = attributes[1..attributes.length - 3].map(&:titleize)
+          attributes = attributes[1..].map(&:titleize)
           # Create the header row from the attributes %>
           <% attributes.each do |attribute| %>
             <th class="text-center"><%= attribute %></th>
@@ -83,7 +83,7 @@
             # Turn the hashmap into an array of the values
             resource_attributes = resource_attributes.values
             # Now, chop off that first and last two attributes
-            resource_attributes = resource_attributes[1..resource_attributes.length - 3]
+            resource_attributes = resource_attributes[1..]
             # And finally, add that list of attributes as a new row to the sheet %>
             <% resource_attributes.each do |attribute| %>
               <td class="border-right"><%= attribute %></td>
