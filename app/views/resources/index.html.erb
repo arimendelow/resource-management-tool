@@ -57,7 +57,7 @@
         <tr>
           <% # Get all of the attributes of a Resource:
           attributes = params[:selected_attributes]
-          # The first attribute is ID
+          # The first attribute is ID, get rid of it
           # Also, make all of the attributes in Title Cases
           attributes = attributes[1..].map(&:titleize)
           # Create the header row from the attributes %>
