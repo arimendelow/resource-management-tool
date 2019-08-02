@@ -51,7 +51,9 @@ all_skills = ["Java", "Ruby On Rails", "Python", "React", "Javascript", "Ruby", 
 all_portfolios = ["Finance", "Engineering", "Human Resources", "Marketing", "Accounting"]
 99.times do |n|
   uid = rand(111111..999999)
-  name = Faker::Name.name
+  name = Faker::Name.unique.name
+  phone_number = Faker::PhoneNumber.unique.cell_phone_with_country_code
+  email = Faker::Internet.email
   skills = all_skills.sample(rand(1..(all_skills.length)/2)).sort # Get a sample of skills from the above array
   portfolio = all_portfolios.sample # Get one portfolio
   start_date = Date.today - Faker::Number.number(3).to_i.days
@@ -61,6 +63,8 @@ all_portfolios = ["Finance", "Engineering", "Human Resources", "Marketing", "Acc
   Resource.create!(
     uid: uid,
     name: name,
+    phone_number: phone_number,
+    email: email,
     skills: skills,
     portfolio: portfolio,
     start_date: start_date,
