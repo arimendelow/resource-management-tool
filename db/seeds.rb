@@ -47,10 +47,13 @@ followers = users[3..40]
 following.each { |followed| user.follow(followed) }
 followers.each { |follower| follower.follow(user) }
 
-all_skills = ["Java", "Ruby On Rails", "Python", "React", "Javascript", "Ruby", "Selenium", "Excel", "Linux", "C", "C++", "JUnit", "Project Planning", "Product Mangement", "Entrepreneurship", "Data Analysis", "Public Speaking", "Teamwork", "Management", "Pitch Development"]
+all_skills = ["Java", "Ruby On Rails", "Python", "React", "Javascript", "Ruby", "Selenium", "Excel", "Linux", "C", "C++", "Junit", "Project Planning", "Product Mangement", "Entrepreneurship", "Data Analysis", "Public Speaking", "Teamwork", "Management", "Pitch Development"]
 all_portfolios = ["Finance", "Engineering", "Human Resources", "Marketing", "Accounting"]
+uid_index = 111111
 99.times do |n|
-  uid = rand(111111..999999)
+  # This needs to be unique, so make sure it's constantly rising
+  uid_index += rand(1000)
+  uid = uid_index
   name = Faker::Name.unique.name
   phone_number = Faker::PhoneNumber.unique.cell_phone_with_country_code
   email = Faker::Internet.email
