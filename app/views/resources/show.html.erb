@@ -1,39 +1,39 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Uid:</strong>
-  <%= @resource.uid %>
-</p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @resource.name %>
-</p>
-
-<p>
-  <strong>Skills:</strong>
-  <%= @resource.skills.join(', ') %>
-</p>
-
-<p>
-  <strong>Portfolio:</strong>
-  <%= @resource.portfolio %>
-</p>
-
-<p>
-  <strong>Start date:</strong>
-  <%= @resource.start_date %>
-</p>
-
-<p>
-  <strong>Location:</strong>
-  <%= @resource.location %>
-</p>
-
-<p>
-  <strong>Manager:</strong>
-  <%= @resource.manager %>
-</p>
-
-<%= link_to 'Edit', edit_resource_path(@resource) %> |
-<%= link_to 'Back', resources_path %>
+<% provide(:title, @resource.name) %>
+<div class="container">
+  <h1><b><%= @resource.name %></b></h1>
+  <h4 class="center">UID: <%= @resource.uid %></h4>
+  <div class="row">
+    <div class="col-md-12">
+      <section class="user_info border-top margin-20">
+        <% # Get all of the attributes of a Resource:
+        attributes = Resource.attribute_names.to_a
+        # The first attribute is ID, the last two are the 'created_at' and 'updated_at' attributes
+        # Also, name and UID are already shown (attributes 2 and 3)
+        attributes = attributes[3..attributes.length - 3] %>
+        <table class="margin-20">
+          <% attributes.each do |attribute| %>
+            <tr>
+              <td class="right">
+                <b>
+                  <%= attribute.titleize %>: 
+                </b>
+              </td>
+              <td>
+                <!-- If the attribute is an array, make it a string -->
+                <% if @resource[attribute].is_a? Array %>
+                  <%= @resource[attribute].join(', ') %>
+                <% else %>
+                  <%= @resource[attribute] %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+        <div class=center>
+          <%= link_to 'Edit Resource', edit_resource_path(@resource) %> |
+          <%= link_to 'Back to List', resources_path %>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
