@@ -169,6 +169,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     pg (1.1.4)
+    pgreset (0.1.1)
     popper_js (1.14.5)
     pry (0.12.2)
       coderay (~> 1.1.0)
@@ -303,6 +304,7 @@ DEPENDENCIES
   minitest
   minitest-reporters
   pg (>= 0.18, < 2.0)
+  pgreset
   puma (~> 3.11)
   rails (~> 5.2.3)
   rails-controller-testing
