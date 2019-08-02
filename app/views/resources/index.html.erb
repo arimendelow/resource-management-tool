@@ -6,7 +6,7 @@
         <% n = 0 %>
         <% @attributes.each do |attribute| %>
           <% checked = (params[:selected_attributes].include? attribute) ? true : false %>
-          <% id =  "attribute-checkbox-#{n}"%>
+          <% id = "attribute-checkbox-#{n}"%>
           <div class="checkbox">
             <%= check_box_tag 'selected_attributes[]', attribute, checked, class: "checkbox", id: id %>
             <label class="nopadding checkbox" for=<%= id %>><%= attribute %></label>
@@ -20,7 +20,7 @@
         <% n = 0 %>
         <% @skills.each do |skill| %>
           <% checked = (params[:selected_skills].include? skill) ? true : false %>
-          <% id =  "skill-checkbox-#{n}"%>
+          <% id = "skill-checkbox-#{n}"%>
           <div class="checkbox">
             <%= check_box_tag 'selected_skills[]', skill, checked, class: "checkbox", id: id %>
             <label class="nopadding checkbox" for=<%= id %>><%= skill %></label>
