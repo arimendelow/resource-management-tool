@@ -14,7 +14,7 @@
             <!-- If the attribute is in the 'default_attributes' list, make it unclickable -->
             <% else %>
               <%= check_box_tag 'selected_attributes[]', attribute, checked, class: "checkbox", id: id %>
-              <label class="nopadding checkbox" for=<%= id %>><%= attribute %></label>
+              <label class="nopadding checkbox" for=<%= id %>><%= attribute.titleize %></label>
             <% end %>
           </div>
           <% n += 1 %>
