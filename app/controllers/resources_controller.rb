@@ -6,6 +6,7 @@ class ResourcesController < ApplicationController
   # GET /resources.json
   def index
     params[:selected_skills] = [] if !params[:selected_skills]
+    params[:selected_attributes] = ["id", "name", "uid", "skills"] if !params[:selected_attributes]
     # @resources = Resource.all
     # .values turns the result from a hash map into an array
     # .flatten ensures that the array is only one dimensional
