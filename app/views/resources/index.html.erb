@@ -12,7 +12,7 @@
             <% if attribute == "id" %>
               <%= hidden_field_tag 'selected_attributes[]', attribute %>
             <!-- If the attribute is in the 'default_attributes' list, make it unclickable -->
-            <% elsif @default_selected_attributes  %>
+            <% elsif @default_selected_attributes %>
               <%= check_box_tag 'selected_attributes[]', attribute, checked, class: "checkbox", id: id, disabled: true %>
               <label class="nopadding checkbox" for=<%= id %>><%= attribute %></label>
             <% else %>
