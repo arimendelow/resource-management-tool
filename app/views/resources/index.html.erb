@@ -2,19 +2,16 @@
   <div>
     <%= form_tag resources_path, :method => "get" do %>
       <div>
-        <h4><b>View Attributes</b></h4>
+        <h4><b>Add Attributes to Report</b></h4>
         <% n = 0 %>
         <% @attributes.each do |attribute| %>
           <% checked = (params[:selected_attributes].include? attribute) ? true : false %>
           <% id = "attribute-checkbox-#{n}"%>
           <div class="checkbox">
             <!-- Hide the tag if it's for the id - that is for internal use -->
-            <% if attribute == "id" %>
+            <% if attribute == "id" or @default_selected_attributes.include?(attribute) %>
               <%= hidden_field_tag 'selected_attributes[]', attribute %>
             <!-- If the attribute is in the 'default_attributes' list, make it unclickable -->
-            <% elsif @default_selected_attributes %>
-              <%= check_box_tag 'selected_attributes[]', attribute, checked, class: "checkbox", id: id, disabled: true %>
-              <label class="nopadding checkbox" for=<%= id %>><%= attribute %></label>
             <% else %>
               <%= check_box_tag 'selected_attributes[]', attribute, checked, class: "checkbox", id: id %>
               <label class="nopadding checkbox" for=<%= id %>><%= attribute %></label>
