@@ -1,4 +1,4 @@
 Hi <%= @user.name %>,
-Welcome to Ari's Sample app! Click on the link below to activate your account:
+Welcome to Ari's Resource Management app! Click on the link below to activate your account:
 
 <%= edit_account_activation_url(@user.activation_token, email: @user.email) %>
