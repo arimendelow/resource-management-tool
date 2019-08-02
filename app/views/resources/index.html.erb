@@ -85,7 +85,7 @@
             end
             # Turn the hashmap into an array of the values
             resource_attributes = resource_attributes.values
-            # Now, chop off that first and last two attributes
+            # Now, chop off that first attribute (ID)
             resource_attributes = resource_attributes[1..]
             # And finally, add that list of attributes as a new row to the sheet %>
             <% resource_attributes.each do |attribute| %>
