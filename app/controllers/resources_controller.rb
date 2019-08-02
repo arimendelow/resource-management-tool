@@ -6,6 +6,8 @@ class ResourcesController < ApplicationController
   # GET /resources.json
   def index
     params[:selected_skills] = [] if !params[:selected_skills]
+    @default_selected_attributes = ["id", "uid", "name", "skills"]
+    params[:selected_attributes] = @default_selected_attributes if !params[:selected_attributes]
     # @resources = Resource.all
     # .values turns the result from a hash map into an array
     # .flatten ensures that the array is only one dimensional
@@ -15,9 +17,15 @@ class ResourcesController < ApplicationController
         FROM public.resources"
     ).values.flatten.sort
     selected_skills = params[:selected_skills] || []
+    @attributes = Resource.attribute_names
+    @selected_attributes = params[:selected_attributes] || @default_selected_attributes
     # Get filter the resources, and need to change the [] from the Ruby array to the {} of the SQL array. Also, sort it by UID.
     # Also, note that passing an empty array will return everything, rather than nothing
-    @resources = Resource.where("skills @> :selected_skills", selected_skills: selected_skills.to_s.sub('[','{').sub(']','}')).order(uid: :asc)
+    @resources = Resource.where(
+      "skills @> :selected_skills", selected_skills: selected_skills.to_s.sub('[','{').sub(']','}')
+      )
+      .select(@selected_attributes.join(', '))
+      .order(uid: :asc)
 
     respond_to do |format|
       format.xlsx {

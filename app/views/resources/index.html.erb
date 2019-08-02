@@ -1,13 +1,32 @@
 <aside class="col-md-2">
-  <h4><b>Sort by: Skills</b></h4>
-  <p>Note: If nothing is selected, all resources will be shown.</p>
   <div>
     <%= form_tag resources_path, :method => "get" do %>
       <div>
+        <h4><b>Add Attributes to Report</b></h4>
+        <% n = 0 %>
+        <% @attributes.each do |attribute| %>
+          <% checked = (params[:selected_attributes].include? attribute) ? true : false %>
+          <% id = "attribute-checkbox-#{n}"%>
+          <div class="checkbox">
+            <!-- Hide the tag if it's for the id - that is for internal use -->
+            <% if attribute == "id" or @default_selected_attributes.include?(attribute) %>
+              <%= hidden_field_tag 'selected_attributes[]', attribute %>
+            <!-- If the attribute is in the 'default_attributes' list, make it unclickable -->
+            <% else %>
+              <%= check_box_tag 'selected_attributes[]', attribute, checked, class: "checkbox", id: id %>
+              <label class="nopadding checkbox" for=<%= id %>><%= attribute.titleize %></label>
+            <% end %>
+          </div>
+          <% n += 1 %>
+        <% end %>
+      </div>
+      <div>
+        <h4><b>Sort by Skills</b></h4>
+        <p>Note: If nothing is selected, all resources will be shown.</p>
         <% n = 0 %>
         <% @skills.each do |skill| %>
           <% checked = (params[:selected_skills].include? skill) ? true : false %>
-          <% id =  "skill-checkbox-#{n}"%>
+          <% id = "skill-checkbox-#{n}"%>
           <div class="checkbox">
             <%= check_box_tag 'selected_skills[]', skill, checked, class: "checkbox", id: id %>
             <label class="nopadding checkbox" for=<%= id %>><%= skill %></label>
@@ -24,7 +43,11 @@
   <h1>Sorted Resources: <%= @resources.length %> results</h1>
   <h2 class="row">
     <%= link_to 'Add a Resource', new_resource_path, class: "btn btn-primary" %>
-    <%= link_to 'Export to Excel', resources_path(format: :xlsx, selected_skills: params[:selected_skills]), class: "btn btn-primary" %>
+    <%= link_to 'Export to Excel',
+      resources_path(format: :xlsx,
+      selected_skills: params[:selected_skills],
+      selected_attributes: params[:selected_attributes],
+      ), class: "btn btn-primary" %>
   </h2>
   
   <% if @resources.empty? %>
@@ -34,10 +57,10 @@
       <thead>
         <tr>
           <% # Get all of the attributes of a Resource:
-          attributes = Resource.attribute_names.to_a
-          # The first attribute is ID, the last two are the 'created_at' and 'updated_at' attributes
+          attributes = params[:selected_attributes]
+          # The first attribute is ID, get rid of it
           # Also, make all of the attributes in Title Cases
-          attributes = attributes[1..attributes.length - 3].map(&:titleize)
+          attributes = attributes[1..].map(&:titleize)
           # Create the header row from the attributes %>
           <% attributes.each do |attribute| %>
             <th class="text-center"><%= attribute %></th>
@@ -56,12 +79,14 @@
             resource_attributes = resource.attributes
             # Make skills one string
             resource_attributes["skills"] = resource_attributes["skills"].join(', ')
-            # Make start date a string
-            resource_attributes["start_date"] = resource_attributes["start_date"].to_s
+            # Make start date a string, if it was included
+            if !!resource_attributes["start_date"]
+              resource_attributes["start_date"] = resource_attributes["start_date"].to_s
+            end
             # Turn the hashmap into an array of the values
             resource_attributes = resource_attributes.values
-            # Now, chop off that first and last two attributes
-            resource_attributes = resource_attributes[1..resource_attributes.length - 3]
+            # Now, chop off that first attribute (ID)
+            resource_attributes = resource_attributes[1..]
             # And finally, add that list of attributes as a new row to the sheet %>
             <% resource_attributes.each do |attribute| %>
               <td class="border-right"><%= attribute %></td>
