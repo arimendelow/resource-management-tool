@@ -1,9 +1,23 @@
 <aside class="col-md-2">
-  <h4><b>Sort by: Skills</b></h4>
+  <h4><b>Sort Results</b></h4>
   <p>Note: If nothing is selected, all resources will be shown.</p>
   <div>
     <%= form_tag resources_path, :method => "get" do %>
       <div>
+        <h5><b>Attributes</b></h5>
+        <% n = 0 %>
+        <% @attributes.each do |attribute| %>
+          <% checked = (params[:selected_attributes].include? attribute) ? true : false %>
+          <% id =  "attribute-checkbox-#{n}"%>
+          <div class="checkbox">
+            <%= check_box_tag 'selected_attributes[]', attribute, checked, class: "checkbox", id: id %>
+            <label class="nopadding checkbox" for=<%= id %>><%= attribute %></label>
+          </div>
+          <% n += 1 %>
+        <% end %>
+      </div>
+      <div>
+        <h5><b>Skills</b></h5>
         <% n = 0 %>
         <% @skills.each do |skill| %>
           <% checked = (params[:selected_skills].include? skill) ? true : false %>
