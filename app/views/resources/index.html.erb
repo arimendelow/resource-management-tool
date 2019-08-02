@@ -1,4 +1,4 @@
-<aside class="col-md-2">
+<aside class="col-md-2 border-right">
   <div>
     <%= form_tag resources_path, :method => "get" do %>
       <div>
@@ -53,7 +53,7 @@
   <% if @resources.empty? %>
     <h3 class="text-center">No resources found for the given search scope!</h3>
   <% else %>
-    <table id="resources-table">
+    <table id="resources-table" class="margin-sides-auto margin-bottom-20">
       <thead>
         <tr>
           <% # Get all of the attributes of a Resource:
@@ -73,7 +73,7 @@
       <tbody>
         <!-- Now, put the resources rows -->
         <% @resources.each do |resource| %>
-          <tr class="border-top">
+          <tr class="border-top border-left border-bottom">
             <!-- Each column -->
             <% # Get the attributes of the resource
             resource_attributes = resource.attributes
