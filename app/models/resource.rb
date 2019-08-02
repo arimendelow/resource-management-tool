@@ -6,7 +6,7 @@ class Resource < ApplicationRecord
 
   # A constant, indicated in Ruby by a name starting with a capital letter
   VALID_EMAIL_REGEX = /\A(\w+)([\w+\-.]+)(\w+)(@)([a-z\d]+)([a-z\d\-\.]+)([a-z\d]+)(\.)([a-z]+)\z/i
-  validates :email, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false } # Rails infirs that uniqueness should be true in addition to case insensitive
+  validates :email, length: { maximum: 255 }, format: { with: VALID_EMAIL_REGEX }
   # Explaining that email regex:
   # /             start of regex
   # \A            match start of string
