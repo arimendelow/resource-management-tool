@@ -1,13 +1,11 @@
 
-# Ruby on Rails tutorial sample app!
+# A tool for managing employees.
 
 Features:
 * Account email verification
 * Session login
 * "Remember Me" login (using cookies)
 * Ability to follow other users and see their posts
-
-[This sample application is live! Test it out here.](http://rails-sample-production.mnmsgae6r4.us-east-1.elasticbeanstalk.com)
 
 Once postgres is setup, before this can be run in production:
 * Run `/usr/local/Cellar/postgresql/11.3//bin/createuser -s postgres` to create a user called `postgres`
