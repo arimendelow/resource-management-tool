@@ -12,7 +12,7 @@ gem 'pg', '>= 0.18', '< 2.0'
 # makes it possible to run rails db:reset against a postgres database with active connections. It should eliminate "database in use" errors from rails.
 gem 'pgreset'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 4.3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
